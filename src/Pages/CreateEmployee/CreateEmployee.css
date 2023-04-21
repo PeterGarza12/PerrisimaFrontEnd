@@ -1,0 +1,10 @@
+.titlePage{
+    font-weight: bold;
+    font-style: italic;
+    border-bottom: 2px solid #3C0973;
+    text-align: left;
+    font-size: 48px;
+    margin-top: 20px;
+    color: #3C0973;
+    ;
+}
