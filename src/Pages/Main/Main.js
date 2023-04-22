@@ -39,7 +39,7 @@ const mainFunctions =(
                 nombre: 'Ganancias',
             },
             {
-                navigate: 'Employees',
+                navigate: 'Employee',
                 imagen: empleados,
                 nombre: 'Empleados',
             },
