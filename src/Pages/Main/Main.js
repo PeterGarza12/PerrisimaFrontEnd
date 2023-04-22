@@ -24,7 +24,7 @@ const mainFunctions =(
                 nombre: 'Egreso',
             },
             {
-                navigate: 'Clients',
+                navigate: 'Client',
                 imagen: clientes,
                 nombre: 'Clientes',
             },

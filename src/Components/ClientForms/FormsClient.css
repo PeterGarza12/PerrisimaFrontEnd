@@ -1,0 +1,44 @@
+.createClientForm{
+    color: #145f17;
+}
+
+.modifyClientForm{
+    color: #90920f;
+}
+.DeleteClientForm{
+    color: #8b1b1b;
+}
+
+.btnCreateClient{
+    border: 1px solid #0f9230;
+    color: #0f9230;
+}
+
+.btnCreateClient:hover{
+    border: 1px solid #0f9230;
+    background-color: #0f9230;
+}
+
+.btnModifyClient{
+    border: 1px solid #90920f;
+    color: #90920f;
+}
+
+.btnModifyClient:hover{
+    border: 1px solid #90920f;
+    background-color: #90920f;
+}
+
+.btnDeleteClient{
+    border: 1px solid #8b1b1b;
+    color: #8b1b1b;
+}
+
+.btnDeleteClient:hover{
+    border: 1px solid #8b1b1b;
+    background-color: #8b1b1b; 
+}
+
+.modifyForm, .deleteForm{
+    margin-top: 40px;
+}
