@@ -1,0 +1,12 @@
+.btnDiv{
+    margin-left: 15px;
+    border: 1px solid #7b33c9;
+    color: #7b33c9;
+    border-radius: 10px;
+}
+
+.btnDiv:hover{
+    cursor: pointer;
+    border: 1px solid #47177a;
+    color: #47177a;
+}
