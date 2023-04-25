@@ -1,0 +1,45 @@
+table
+{
+  width: 100%;
+  font-family: Verdana;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  margin: 2rem auto;
+}
+
+thead
+{
+  background-color: #520f99;
+  color: white;
+}
+
+table
+{
+  background-color: rgb(220, 219, 221);
+  color: #000000;
+}
+
+tr
+{
+  text-align: center;
+}
+
+th
+{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+td
+{
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+}
+
+
+
+table tr:nth-child(2n)
+{
+  background-color: #9389a0;
+}
