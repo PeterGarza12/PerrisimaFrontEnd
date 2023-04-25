@@ -6,6 +6,7 @@ import { Footer } from './Components/Footer/footer';
 import { Login } from './Pages/Login/Login';
 import { Main } from './Pages/Main/Main';
 import { Income } from './Pages/Income/Income';
+import { Outcome } from './Pages/Outcome/Outcome';
 import { Client } from './Pages/Client/Client';
 import { ProfileUser } from './Pages/Profile/Profile';
 import { CreateEmployee } from './Pages/CreateEmployee/CreateEmployee';
@@ -20,6 +21,7 @@ function App() {
           <Route exact path='/'         element={<Login/>}>         </Route>
           <Route exact path='/main'     element={<Main/>}>          </Route>
           <Route exact path='/income'   element={<Income/>}>        </Route>
+          <Route exact path='/outcome'  element={<Outcome/>}>       </Route>
           <Route exact path='/client'   element={<Client/>}>        </Route>
           <Route exact path='/profile'  element={<ProfileUser/>}>   </Route>
           <Route exact path='/employee' element={<CreateEmployee/>}></Route>
