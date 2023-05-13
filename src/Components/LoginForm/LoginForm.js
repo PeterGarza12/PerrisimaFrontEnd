@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './LoginForm.css';
 
 
-export default function LoginForm(){
+export default function LoginForm(props){
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -15,9 +15,15 @@ export default function LoginForm(){
         setPassword(event.target.value);
     };
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        props.onLogin(username,password);
+    }
+
     return(
         <div className="login-form d-flex justify-content-center">
-            <form className="col-lg-5 col-md-6 col-sm-8 col-11 d-flex flex-column justify-content-center">
+            <form onSubmit={handleFormSubmit} className="col-lg-5 col-md-6 col-sm-8 col-11 d-flex flex-column justify-content-center">
                 <h1 className="h1-form">¡Bienvenido!</h1>
                 <label>
                     Nombre de usuario
