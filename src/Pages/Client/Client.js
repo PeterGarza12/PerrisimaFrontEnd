@@ -39,7 +39,9 @@ export const Client = () => {
                         }
                     }}/>
                 ) : option===2 ? (
-                    <ModifyClient/>
+                    <ModifyClient onClientSearch={async (phone) => {
+
+                    }}/>
                 ) : (
                     <DeleteClient/>
                 )
