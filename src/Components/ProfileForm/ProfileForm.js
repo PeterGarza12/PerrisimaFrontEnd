@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import './ProfileForm.css'
 
 export default function ProfileForm(){
-
-    const ejemplo = "Angélica";
+    var user = JSON.parse(window.sessionStorage.getItem("user"));
     
     const [ActualPassword, setActualPassword] = useState("");
     const handleActualPasswordChange =(event) => {
@@ -26,18 +25,23 @@ export default function ProfileForm(){
                 <h1 className="h1-form">Información personal de la empleada</h1>
                 
                 <label>
-                    Nombre
-                    <input className="disabled col-12" type="text" placeholder={ejemplo} disabled></input>
+                    Nombre completo
+                    <input className="disabled col-12" type="text" disabled value={user.name}></input>
                 </label>
 
                 <label>
-                    Apellido
-                    <input className="disabled col-12" type="text" placeholder="Garza" disabled></input>
+                    Nombre de usuario
+                    <input className="disabled col-12" type="text" disabled value={user.user_name}></input>
                 </label>
 
                 <label>
                     Email
-                    <input className="disabled col-12" type="email" placeholder="angelica@gmail.com" disabled></input>
+                    <input className="disabled col-12" type="email" value={user.email} disabled></input>
+                </label>
+
+                <label>
+                    Teléfono
+                    <input className="disabled col-12" type="number" value={user.phone_number} disabled></input>
                 </label>
 
                 <label>

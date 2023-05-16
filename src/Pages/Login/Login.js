@@ -17,6 +17,7 @@ export const Login = () => {
 
                 if (response.status == 200)
                 {
+                    window.sessionStorage.setItem("user", JSON.stringify(response.data));
                     navigate("/main");
                 }
                 else if (response.status == 401)
