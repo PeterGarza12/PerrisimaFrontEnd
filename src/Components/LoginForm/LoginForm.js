@@ -4,11 +4,11 @@ import './LoginForm.css';
 
 export default function LoginForm(props){
     
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleUsernameChange =(event) => {
-        setUsername(event.target.value);
+    const handleEmailChange =(event) => {
+        setEmail(event.target.value);
     };
 
     const handlePasswordChange =(event) => {
@@ -18,7 +18,7 @@ export default function LoginForm(props){
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        props.onLogin(username,password);
+        props.onLogin(email,password);
     }
 
     return(
@@ -26,8 +26,8 @@ export default function LoginForm(props){
             <form onSubmit={handleFormSubmit} className="col-lg-5 col-md-6 col-sm-8 col-11 d-flex flex-column justify-content-center">
                 <h1 className="h1-form">¡Bienvenido!</h1>
                 <label>
-                    Nombre de usuario
-                    <input className="col-12" type="text" placeholder="Escriba su nombre de usuario" value={username} onChange={handleUsernameChange}></input>
+                    Correo electrónico
+                    <input className="col-12" type="text" placeholder="Escriba su correo electrónico" value={email} onChange={handleEmailChange}></input>
                 </label>
 
                 <label>

@@ -12,10 +12,19 @@ export const Login = () => {
         <div className="Login-page">
             <h1>Aquí va la imagen del logo</h1>
             <LoginForm onLogin={async (email,password) => {
-                var userdata = await getUserByEmail(email);
+                var response = await getUserByEmail(email, password);
 
-                if (email == userdata.email && password == userdata.password){
+                if (response.status == 200)
+                {
                     navigate("/main");
+                }
+                else if (response.status == 401)
+                {
+                    alert("Credenciales incorrectas");
+                }
+                else
+                {
+                    alert("Algo salió mal, vuelva a intentarlo más tarde");
                 }
             }}/>
         </div>

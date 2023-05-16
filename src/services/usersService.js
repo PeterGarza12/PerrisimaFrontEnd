@@ -55,20 +55,24 @@ export const createUser = async (user) => {
   }
 };
 
-export const getUserByEmail = async (user_email) => {
+export const getUserByEmail = async (user_email, user_password) => {
   try {
     const requestBody = new FormData();
     requestBody.append('email', user_email);
+    requestBody.append('password', user_password);
+
     const response = await axios.post('/users/login',{
-      email: user_email 
+      email: user_email,
+      password: user_password
     });
 
     console.log(response);
 
-    return response.data[0];
-  } catch (err) {
-    console.error(err);
-    return [];
+    return response;
+  } catch (error) {
+    console.error(error);
+
+    return error.response;
   }
 };
 
