@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from 'sweetalert2';
 import LoginForm from "../../Components/LoginForm/LoginForm";
 import './Login.css';
 import { getUserByEmail } from "../../services/usersService";
@@ -20,7 +21,11 @@ export const Login = () => {
                 }
                 else if (response.status == 401)
                 {
-                    alert("Credenciales incorrectas");
+                    Swal.fire({
+                        title: 'Credenciales incorrectas',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                      });
                 }
                 else
                 {
