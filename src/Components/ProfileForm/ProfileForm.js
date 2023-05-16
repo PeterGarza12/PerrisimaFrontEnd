@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import './ProfileForm.css'
+import $ from "jquery";
+import { editUser } from "../../services/usersService";
+import Swal from "sweetalert2";
+import { updateSessionStorageUser } from "../../Utils/sessionStorage";
 
 export default function ProfileForm(){
 
-    const ejemplo = "Angélica";
+    var user = JSON.parse(window.sessionStorage.getItem("user"));
     
     const [ActualPassword, setActualPassword] = useState("");
     const handleActualPasswordChange =(event) => {
@@ -20,43 +24,143 @@ export default function ProfileForm(){
         setConfirmPassword(event.target.value);
     };
 
+    const togglePwBox = (e) => {
+        e.preventDefault();
+        $("#passwords").toggle();
+        $("#changePw").toggle();
+    }
+
+    const changePw = async (e) => {
+        e.preventDefault();
+        var oldP = $("#oldPw").val();
+        var newP = $("#newPw").val();
+        var confNewP = $("#confirmNewPw").val();
+        if (newP == confNewP && user.password == oldP){
+            var data = {
+                password: newP
+            }
+            var response = await editUser(data, user.id);
+
+            if (response.status == 200){
+                updateSessionStorageUser({password: newP});
+                Swal.fire({
+                    title: 'Contraseña cambiada correctamente',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                  });
+
+                $("#passwords").toggle();
+                $("#changePw").toggle();
+            }
+            else if (response.status == 422)
+            {
+                Swal.fire({
+                    title: 'La contraseña nueva no es válida',
+                    text: 'La contraseña debe de contener solo 8 caracteres, incluyendo 1 mayúscula, 1 caractér especial y 1 número',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok'
+                  });
+            }
+            else
+            {
+                Swal.fire({
+                    title: 'Algo salió mal',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok'
+                  });
+            }
+        }
+        else if (user.password !== oldP)
+        {
+            Swal.fire({
+                title: 'Contraseña incorrecta',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              });
+        }
+        else
+        {
+            Swal.fire({
+                title: 'Las contraseñas no coinciden',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              });
+        }
+        
+    }
+
     return(
         <div className="login-form d-flex justify-content-center">
             <form className="col-xl-7 col-lg-8 col-md-10 col-11 d-flex flex-column justify-content-between">
                 <h1 className="h1-form">Información personal de la empleada</h1>
                 
                 <label>
-                    Nombre
-                    <input className="disabled col-12" type="text" placeholder={ejemplo} disabled></input>
+                    Nombre completo
+                    <input className="disabled col-12" type="text" disabled value={user.name}></input>
                 </label>
 
                 <label>
-                    Apellido
-                    <input className="disabled col-12" type="text" placeholder="Garza" disabled></input>
+                    Nombre de usuario
+                    <input className="disabled col-12" type="text" disabled value={user.user_name}></input>
                 </label>
 
                 <label>
                     Email
-                    <input className="disabled col-12" type="email" placeholder="angelica@gmail.com" disabled></input>
+                    <input className="disabled col-12" type="email" value={user.email} disabled></input>
                 </label>
 
                 <label>
-                    Contraseña actual
-                    <input className="col-12" type="password" placeholder="Ingrese su contraseña actual" value={ActualPassword} onChange={handleActualPasswordChange}></input>
+                    Teléfono
+                    <input className="disabled col-12" type="number" value={user.phone_number} disabled></input>
                 </label>
 
-                <label>
-                    Contraseña nueva
-                    <input className="col-12" type="password" placeholder="Ingrese la contraseña que desea" value={NewPassword} onChange={handleNewPasswordChange}></input>
-                </label>
+                <div id="passwords" className="col-12 flex-column justify-content-center align-items-center">
+                    <label>
+                        Contraseña actual
+                        <input 
+                            id="oldPw" 
+                            className="col-12" 
+                            type="password" 
+                            placeholder="Ingrese su contraseña actual" 
+                            value={ActualPassword} 
+                            onChange={handleActualPasswordChange}
+                            maxlength="8"
+                        />
+                    </label>
 
-                <label>
-                    Confirmar contraseña nueva
-                    <input className="col-12" type="password" placeholder="Confirme su nueva contraseña" value={ConfirmPassword} onChange={handleConfirmPasswordChange}></input>
-                </label>
+                    <label>
+                        Contraseña nueva
+                        <input 
+                            id="newPw" 
+                            className="col-12" 
+                            type="password" 
+                            placeholder="Ingrese la contraseña que desea" 
+                            value={NewPassword} 
+                            onChange={handleNewPasswordChange}
+                            maxlength="8"
+                        />
+                    </label>
+
+                    <label>
+                        Confirmar contraseña nueva
+                        <input 
+                            id="confirmNewPw" 
+                            className="col-12" 
+                            type="password" 
+                            placeholder="Confirme su nueva contraseña" 
+                            value={ConfirmPassword} 
+                            onChange={handleConfirmPasswordChange}
+                            maxlength="8"
+                        />
+                    </label>
+
+                    <button id="savePw"  onClick={changePw} className="btn-form col-xl-6 col-lg-9 col-md-10 col-12" type="submit">
+                        Guardar
+                    </button>
+                </div>
                 
                 <div className="d-flex flex-row justify-content-center">
-                    <button className="btn-form col-xl-6 col-lg-9 col-md-10 col-11" type="submit">
+                    <button id="changePw" onClick={togglePwBox} className="btn-form col-xl-6 col-lg-9 col-md-10 col-11">
                         Cambiar contraseña
                     </button>
                 </div>

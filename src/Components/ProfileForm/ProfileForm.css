@@ -2,3 +2,12 @@
    text-decoration: none;
    color: blue;
 }
+
+#passwords {
+   display: none;
+}
+
+.changePw{
+   background-color: #6010b0;
+   color: white;
+}
