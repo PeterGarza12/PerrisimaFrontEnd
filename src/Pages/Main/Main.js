@@ -9,6 +9,7 @@ import clientes from './../../Res/clientes.png'
 import perfil from './../../Res/perfil.png'
 import ganancias from './../../Res/ganancias.png'
 import empleados from './../../Res/empleados.png'
+import { useNavigate } from "react-router-dom";
 
 const mainFunctions =(
     <ListOfFunctions
@@ -49,6 +50,15 @@ const mainFunctions =(
 
 
 export const Main = () => {
+    const navigate = useNavigate();
+
+    const signOut = () => {
+        window.sessionStorage.removeItem("user");
+        navigate("/");
+    }
+
+    var user = JSON.parse(window.sessionStorage.getItem("user"));
+
     return(
         <div className="mainPage d-flex flex-column">
             {/* Imagen de portada */}
@@ -60,11 +70,11 @@ export const Main = () => {
                     height: "60%",
                 }}
             />
-            <h1 className="welcomeText">Bienvenida de nuevo Usuario</h1>
+            <h1 className="welcomeText">Bienvenida de nuevo {user.name}</h1>
             <Container className="centrado">
                 {mainFunctions}
             </Container>
-            <button className="logout col-6 col-sm-8 col-md-4">Cerrar sesión</button>
+            <button className="logout col-6 col-sm-8 col-md-4" onClick={signOut}>Cerrar sesión</button>
         </div>
     )
 }
