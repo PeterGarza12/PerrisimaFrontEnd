@@ -14,11 +14,11 @@ export const Login = () => {
             <LoginForm onLogin={async (email,password) => {
                 var response = await getUserByEmail(email, password);
 
-                if (response.status == 200)
+                if (response.status === 200)
                 {
                     navigate("/main");
                 }
-                else if (response.status == 401)
+                else if (response.status === 401)
                 {
                     alert("Credenciales incorrectas");
                 }

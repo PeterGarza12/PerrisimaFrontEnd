@@ -139,3 +139,25 @@ export const getClientByPhone = async (phone) => {
 //   }
 // };
 
+export const ClientCreate = async (client_name,client_lastname,client_phone) => {
+  try {
+    const requestBody = new FormData();
+    const client_realName = client_name + " " + client_lastname;
+
+    requestBody.append('name', client_realName);
+    requestBody.append('phone_number', client_phone);
+
+    const response = await axios.post('/clients',{
+      name: client_realName,
+      phone_number: client_phone,
+    });
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.error(error);
+
+    return error.response;
+  }
+};
