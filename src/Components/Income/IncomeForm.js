@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import './Income.css'
+import { getClientByPhone } from "../../services/clientsService";
+import { useNavigate } from "react-router-dom";
 
-export default function IncomeForm(){
+export default function IncomeForm(props){
 
     let infoComboBox = [
         {label: "Uñas acrílico", value: "Uñas acrílico", price: 350},
@@ -29,7 +31,14 @@ export default function IncomeForm(){
     const [selected, setSelected] = useState([]);
     const [money, setMoney] = useState(0);
     const [personalized, setPersonalized] = useState(0);
+    const [phone, setPhone] = useState("");
 
+    const navigate = useNavigate();
+
+    const handlePhoneChange =(event) => {
+        setPhone(event.target.value);
+    };
+    
     const handlePersonalized = (event) =>{
         let valor = event.target.value;
         if(valor===""){
@@ -51,6 +60,40 @@ export default function IncomeForm(){
         setMoney(precio);        
     }
 
+    const handleSearchClient = async (e) => {
+        e.preventDefault();
+
+        let phoneregex = /(^[\d]{10}$)/;
+        if(!phoneregex.test(phone))
+        {
+          alert("Rellene el campo correctamente");
+          return;
+        } else {
+
+            var response = await getClientByPhone(phone);
+            
+            if (response.status == 200)
+            {
+                document.getElementById("name").value = response.data.name;
+                document.getElementById("phone").value = response.data.phone_number;
+                document.getElementById("name").value = response.data.name;
+                document.getElementById("name").value = response.data.name;
+            }
+            else if (response.response.status == 404)
+            {
+                alert("Cliente no encontrado");
+            }
+            else
+            {
+                alert("Algo salió mal, vuelva a intentarlo más tarde");
+            }
+            
+            props.onClientSearch(phone);
+
+        }
+        
+    }
+
     console.log("precio:", money);
 
     return(
@@ -61,24 +104,19 @@ export default function IncomeForm(){
                 <label>
                     Buscar clienta
                     <div id="form" role="search" className="col-xl-7 col-lg-8 col-md-10 col-11">
-                        <input className="col-10" type="search" id="query" name="q" placeholder="Ingrese teléfono o ID de la clienta que atendió" aria-label="Search through site content"></input>
-                        <button className="col-2">Buscar</button>
+                        <input className="col-10" type="search" id="query" name="q" value={phone} onChange={handlePhoneChange} placeholder="Ingrese teléfono de la clienta que atendió" aria-label="Search through site content"></input>
+                        <button onClick={handleSearchClient} id="searchclient" className="col-2">Buscar</button>
                     </div>
                 </label>
 
                 <label>
                     Nombre
-                    <input className="col-12" type="text" placeholder="Name" disabled></input>
-                </label>
-
-                <label>
-                    Apellido
-                    <input className="col-12" type="text" placeholder="Lastname" disabled></input>
+                    <input id="name" className="col-12" type="text" placeholder="Name" disabled></input>
                 </label>
 
                 <label>
                     Teléfono
-                    <input className="col-12" type="number" placeholder="Phone" disabled></input>
+                    <input id="phone" className="col-12" type="number" placeholder="Phone" disabled></input>
                 </label>
 
                 <label>
