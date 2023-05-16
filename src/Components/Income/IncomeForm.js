@@ -72,14 +72,14 @@ export default function IncomeForm(props){
 
             var response = await getClientByPhone(phone);
             
-            if (response.status == 200)
+            if (response.status === 200)
             {
                 document.getElementById("name").value = response.data.name;
                 document.getElementById("phone").value = response.data.phone_number;
                 document.getElementById("name").value = response.data.name;
                 document.getElementById("name").value = response.data.name;
             }
-            else if (response.response.status == 404)
+            else if (response.response.status === 404)
             {
                 alert("Cliente no encontrado");
             }

@@ -3,7 +3,7 @@ import './../Client/Client.css'
 import CreateClient from "../../Components/ClientForms/CreateClient";
 import ModifyClient from "../../Components/ClientForms/ModifyClient";
 import DeleteClient from "../../Components/ClientForms/DeleteClient";
-import { ClientCreate } from "../../services/clientsService";
+import { ClientCreate, ClientModify, ClientDelete} from "../../services/clientsService";
 import { useNavigate } from "react-router-dom";
 
 export const Client = () => {
@@ -39,11 +39,39 @@ export const Client = () => {
                         }
                     }}/>
                 ) : option===2 ? (
-                    <ModifyClient onClientSearch={async (phone) => {
-
+                    <ModifyClient onModifyClient={async (id, name, lastname, phone) => {
+                        var response = await ClientModify(id, name, lastname, phone);
+        
+                        if (response.status === 200)
+                        {
+                            navigate("/main");
+                        }
+                        else if (response.status === 401)
+                        {
+                            alert("Credenciales incorrectas");
+                        }
+                        else
+                        {
+                            alert("Algo salió mal, vuelva a intentarlo más tarde");
+                        }
                     }}/>
                 ) : (
-                    <DeleteClient/>
+                    <DeleteClient onDeleteClient={async (id, name, lastname, phone) => {
+                        var response = await ClientDelete(id, name, lastname, phone);
+        
+                        if (response.status === 200)
+                        {
+                            navigate("/main");
+                        }
+                        else if (response.status === 401)
+                        {
+                            alert("Credenciales incorrectas");
+                        }
+                        else
+                        {
+                            alert("Algo salió mal, vuelva a intentarlo más tarde");
+                        }
+                    }}/>
                 )
             }
 

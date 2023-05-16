@@ -43,7 +43,7 @@ export const createUser = async (user) => {
     const response = await axios.post("/user", user);
     console.log(response);
     console.log("STATUS: " + response.status);
-    if (response.status != 200){
+    if (response.status !== 200){
         return "Error" + response.status;
     }
 
@@ -112,7 +112,7 @@ export const postCreateEmployee = async (user_name,user_lastname,user_email,user
 export const isAdmin = async (user_email) => {
   try {    
     const response = await axios.post("/isUserAdmin", {user_email: user_email});
-    if (response.status != 200){
+    if (response.status !== 200){
       return false;
     }
     //console.log("is admin? "+JSON.stringify(response.data.indeedAdmin) + user_email);
