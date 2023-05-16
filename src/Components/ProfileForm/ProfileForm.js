@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import './ProfileForm.css'
+import $ from "jquery";
+
 
 export default function ProfileForm(){
     var user = JSON.parse(window.sessionStorage.getItem("user"));
@@ -19,8 +21,10 @@ export default function ProfileForm(){
         setConfirmPassword(event.target.value);
     };
 
-    const changePw = () => {
-
+    const changePw = (e) => {
+        e.preventDefault();
+        alert('aaa');
+        $("#passwords").css("display", "flex");
     }
 
     return(
@@ -48,7 +52,7 @@ export default function ProfileForm(){
                     <input className="disabled col-12" type="number" value={user.phone_number} disabled></input>
                 </label>
 
-                <div id="passwords" className="d-none flex-column">
+                <div id="passwords" className="flex-column">
                     <label>
                         Contraseña actual
                         <input className="col-12" type="password" placeholder="Ingrese su contraseña actual" value={ActualPassword} onChange={handleActualPasswordChange}></input>
