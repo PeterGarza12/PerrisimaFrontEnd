@@ -36,14 +36,16 @@ export default function ProfileForm(){
         var newP = $("#newPw").val();
         var confNewP = $("#confirmNewPw").val();
         
-        var regex = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}\z/;
+        var regex = /((?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,})/;
         console.log(regex.test(newP));
-        if (regex.test(newP)){
-            alert("si está chido");
-        }
-        else
+        if (!regex.test(newP))
         {
-            alert("no");
+            Swal.fire({
+                title: 'La contraseña nueva no es válida',
+                text: 'La contraseña debe de contener solo 8 caracteres, con al menos 1 caractér especial y 1 número',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+              });
             return;
         }
 
