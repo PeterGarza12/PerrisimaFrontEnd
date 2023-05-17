@@ -35,13 +35,25 @@ export default function ProfileForm(){
         var oldP = $("#oldPw").val();
         var newP = $("#newPw").val();
         var confNewP = $("#confirmNewPw").val();
-        if (newP == confNewP && user.password == oldP){
+        
+        var regex = /\A(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}\z/;
+        console.log(regex.test(newP));
+        if (regex.test(newP)){
+            alert("si está chido");
+        }
+        else
+        {
+            alert("no");
+            return;
+        }
+
+        if (newP === confNewP && user.password === oldP){
             var data = {
                 password: newP
             }
             var response = await editUser(data, user.id);
 
-            if (response.status == 200){
+            if (response.status === 200){
                 updateSessionStorageUser({password: newP});
                 Swal.fire({
                     title: 'Contraseña cambiada correctamente',
@@ -52,7 +64,7 @@ export default function ProfileForm(){
                 $("#passwords").toggle();
                 $("#changePw").toggle();
             }
-            else if (response.status == 422)
+            else if (response.status === 422)
             {
                 Swal.fire({
                     title: 'La contraseña nueva no es válida',
@@ -124,7 +136,7 @@ export default function ProfileForm(){
                             placeholder="Ingrese su contraseña actual" 
                             value={ActualPassword} 
                             onChange={handleActualPasswordChange}
-                            maxlength="8"
+                            maxLength="8"
                         />
                     </label>
 
@@ -137,7 +149,10 @@ export default function ProfileForm(){
                             placeholder="Ingrese la contraseña que desea" 
                             value={NewPassword} 
                             onChange={handleNewPasswordChange}
-                            maxlength="8"
+                            maxLength="8"
+                            pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8})/"
+                            onInvalid={e => e.target.setCustomValidity('Contraseña inválida')}
+                            onInput={e => e.target.setCustomValidity('')}
                         />
                     </label>
 
@@ -150,7 +165,10 @@ export default function ProfileForm(){
                             placeholder="Confirme su nueva contraseña" 
                             value={ConfirmPassword} 
                             onChange={handleConfirmPasswordChange}
-                            maxlength="8"
+                            maxLength="8"
+                            pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8})/"
+                            onInvalid={e => e.target.setCustomValidity('Contraseña inválida')}
+                            onInput={e => e.target.setCustomValidity('')}
                         />
                     </label>
 
