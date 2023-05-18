@@ -33,9 +33,15 @@ export default function IncomeForm(props){
     const [money, setMoney] = useState(0);
     const [personalized, setPersonalized] = useState(0);
     const [phone, setPhone] = useState("");
-    var clientid = null;
+    const [category, setCategory] = useState(2);
+    const [clientid, setClient] = useState("");
+    const [comment, setComment] = useState("");
 
     const navigate = useNavigate();
+    
+    const handleCategory = (event) =>{
+        setCategory(event.target.value);
+    }
 
     const handlePhoneChange =(event) => {
         setPhone(event.target.value);
@@ -54,12 +60,15 @@ export default function IncomeForm(props){
     const addMoney = ()=>{
 
         let precio = 0;
+        let comentario = "";
 
         for(let i = 0; i<selected.length; i++){
             precio += selected[i].price;
+            comentario += selected[i].value + ", ";
         }
         precio+=personalized;
-        setMoney(precio);        
+        setMoney(precio); 
+        setComment(comentario);       
     }
 
     function updateFields(){
@@ -91,7 +100,8 @@ export default function IncomeForm(props){
             {
                 document.getElementById("name").value = response.data.name;
                 document.getElementById("phone").value = response.data.phone_number;
-                clientid = response.data.id;
+                let clientid = response.data.id;
+                setClient(clientid);
                 console.log(clientid);
                 updateFields();
             }
@@ -105,9 +115,7 @@ export default function IncomeForm(props){
                 alert("Algo salió mal, vuelva a intentarlo más tarde");
                 hideFields();
             }
-            
-            props.onClientSearch(phone);
-
+    
         }
         
     }
@@ -115,24 +123,24 @@ export default function IncomeForm(props){
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        if(selected.size <= 0){
-            alert('Error en los datos');
-            return;
-        } else if(clientid == null || clientid == ""){
-            alert('Error en los datos');
-            return;
-        } else if(money == null || money == ""){
-            alert('Error en los datos');
-            return;
-        }
-        props.onLogin(money,selected,clientid);
+        // if(selected.size <= 0){
+        //     alert('Error en los datos');
+        //     return;
+        // } else if(clientid == null || clientid == ""){
+        //     alert('Error en los datos');
+        //     return;
+        // } else if(money == null || money == ""){
+        //     alert('Error en los datos');
+        //     return;
+        // }
+        props.onIncomeCreate(money,category,comment,clientid);
     }
 
     console.log("precio:", money);
 
     return(
         <div className="login-form d-flex justify-content-center">
-            <form className="col-xl-7 col-lg-8 col-md-10 col-11 d-flex flex-column justify-content-between">
+            <form onSubmit={handleFormSubmit} className="col-xl-7 col-lg-8 col-md-10 col-11 d-flex flex-column justify-content-between">
                 <h1 className="h1-form">Venta</h1>
 
                 <label>
@@ -152,6 +160,13 @@ export default function IncomeForm(props){
                     Teléfono
                     <input id="phone" className="col-12" type="number" placeholder="Phone" disabled></input>
                 </label>
+
+                <label for="categorias" className="aftersearch" hidden>Categoría del gasto realizado</label>
+                    <select name="categorias" id="categorias" className="col-11 aftersearch" hidden onClick={handleCategory}>
+                        <option value="2">      Producto pestañas   </option>
+                        <option value="3">          Producto uñas       </option>
+                        <option value="4">   Producto extensiones</option>
+                    </select>
 
                 <label className="aftersearch" hidden>
                     Servicio/s dado/s
