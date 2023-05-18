@@ -3,6 +3,7 @@ import { MultiSelect } from "react-multi-select-component";
 import './Income.css'
 import { getClientByPhone } from "../../services/clientsService";
 import { useNavigate } from "react-router-dom";
+import $ from "jquery";
 
 export default function IncomeForm(props){
 
@@ -32,6 +33,7 @@ export default function IncomeForm(props){
     const [money, setMoney] = useState(0);
     const [personalized, setPersonalized] = useState(0);
     const [phone, setPhone] = useState("");
+    var clientid = null;
 
     const navigate = useNavigate();
 
@@ -60,6 +62,18 @@ export default function IncomeForm(props){
         setMoney(precio);        
     }
 
+    function updateFields(){
+        $(".aftersearch").removeAttr("hidden");
+
+    }
+
+    function hideFields(){
+        $(".aftersearch").attr("hidden",true);
+        $("#name").val("");
+        $("#phone").val("");
+        clientid = null;
+    }
+
     const handleSearchClient = async (e) => {
         e.preventDefault();
 
@@ -67,6 +81,7 @@ export default function IncomeForm(props){
         if(!phoneregex.test(phone))
         {
           alert("Rellene el campo correctamente");
+          hideFields();
           return;
         } else {
 
@@ -76,22 +91,41 @@ export default function IncomeForm(props){
             {
                 document.getElementById("name").value = response.data.name;
                 document.getElementById("phone").value = response.data.phone_number;
-                document.getElementById("name").value = response.data.name;
-                document.getElementById("name").value = response.data.name;
+                clientid = response.data.id;
+                console.log(clientid);
+                updateFields();
             }
             else if (response.response.status == 404)
             {
                 alert("Cliente no encontrado");
+                hideFields();
             }
             else
             {
                 alert("Algo salió mal, vuelva a intentarlo más tarde");
+                hideFields();
             }
             
             props.onClientSearch(phone);
 
         }
         
+    }
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        if(selected.size <= 0){
+            alert('Error en los datos');
+            return;
+        } else if(clientid == null || clientid == ""){
+            alert('Error en los datos');
+            return;
+        } else if(money == null || money == ""){
+            alert('Error en los datos');
+            return;
+        }
+        props.onLogin(money,selected,clientid);
     }
 
     console.log("precio:", money);
@@ -119,7 +153,7 @@ export default function IncomeForm(props){
                     <input id="phone" className="col-12" type="number" placeholder="Phone" disabled></input>
                 </label>
 
-                <label>
+                <label className="aftersearch" hidden>
                     Servicio/s dado/s
                     <MultiSelect
                     options={infoComboBox}
@@ -128,19 +162,19 @@ export default function IncomeForm(props){
                     labelledBy="Servicio"></MultiSelect>
                 </label>
 
-                <label>
+                <label className="aftersearch" hidden>
                     Precio de servicio personalizado
                     <input className="col-12" type="number" placeholder="0" defaultValue={0} onChange={handlePersonalized}></input>
                 </label>
 
-                    <div className="btnDiv col-3" onClick={addMoney}>
-                        Calcular precio total
-                    </div>
-
-                <div className="d-flex flex-row justify-content-center">
+                <div className="btnDiv col-3 aftersearch" hidden onClick={addMoney}>
+                    Calcular precio total
                 </div>
 
-                <label>
+                <div className="d-flex flex-row justify-content-center aftersearch" hidden>
+                </div>
+
+                <label className="aftersearch" hidden>
                     Precio final
                     <input className="col-12" type="number" placeholder={money} ></input>
                 </label>
@@ -148,7 +182,7 @@ export default function IncomeForm(props){
 
 
                 <div className="d-flex flex-row justify-content-center">
-                    <button className="btn-form col-xl-6 col-lg-9 col-md-10 col-11" type="submit">
+                    <button className="btn-form col-xl-6 col-lg-9 col-md-10 col-11 aftersearch" hidden type="submit">
                         Registrar venta
                     </button>
                 </div>

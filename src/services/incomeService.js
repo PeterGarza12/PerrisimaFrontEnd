@@ -1,23 +1,30 @@
 import { AxiosConfig as axios } from "./axiosConfig";
 
-export const createUser = async (user) => {
-    try {
-      console.log(user);
-      const response = await axios.post("/user", user);
-      console.log(response);
-      console.log("STATUS: " + response.status);
-      if (response.status != 200){
-          return "Error" + response.status;
-      }
-  
-      return "Creado con éxito";
-  
-    } catch (err) {
-      console.error(err);
-      return "Ocurrió un error inesperado";
-    }
-  };
+export const createIncome = async (amount, categories, clientid) => {
+  try {
 
+    var user = JSON.parse(window.sessionStorage.getItem("user"));
+    var user_id = user.id;
+
+    const requestBody = new FormData();
+    requestBody.append('amount', amount);
+    requestBody.append('password', user_id);
+    requestBody.append('category_id', user_id);
+    requestBody.append('password', user_id);
+
+    const response = await axios.post('/users/login',{
+
+    });
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.error(error);
+
+    return error.response;
+  }
+};
 // export const getClientByPhone = async (phone) => {
 //   try {
 //     const route = "/clients/search/" + phone;
