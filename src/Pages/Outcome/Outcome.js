@@ -15,7 +15,7 @@ export const Outcome = () => {
                         var response = await OutcomeCreate(category, comment, total, userid);
         
                         
-                        if (response.status === 200)
+                        if (response.status === 201)
                         {
                             navigate("/main");
                         }

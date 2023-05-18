@@ -4,15 +4,17 @@ export const OutcomeCreate = async (outcome_category, outcome_comment, outcome_t
     try {
       const requestBody = new FormData();
 
-
+console.log("comentario: ", outcome_comment);
       requestBody.append('amount', outcome_total);
       requestBody.append('user_id', user_id);
       requestBody.append('category_id', outcome_category);
+      requestBody.append('comment', outcome_comment);
   
       const response = await axios.post('/outcomes',{
         amount: outcome_total,
         user_id: user_id,
-        category_id: outcome_category
+        category_id: outcome_category,
+        comment: outcome_comment
       });
   
       console.log(response);
