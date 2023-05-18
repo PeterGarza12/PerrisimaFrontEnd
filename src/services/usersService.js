@@ -43,7 +43,7 @@ export const createUser = async (user) => {
     const response = await axios.post("/user", user);
     console.log(response);
     console.log("STATUS: " + response.status);
-    if (response.status != 200){
+    if (response.status !== 200){
         return "Error" + response.status;
     }
 
@@ -76,10 +76,43 @@ export const getUserByEmail = async (user_email, user_password) => {
   }
 };
 
+export const postCreateEmployee = async (user_name,user_lastname,user_email,user_phone,user_username) => {
+  try {
+    const requestBody = new FormData();
+    const user_realName = user_name + " " + user_lastname;
+    const user_password = "Con1234$"
+    const user_type = 1;
+
+    requestBody.append('name', user_realName);
+    requestBody.append('password', user_password);
+    requestBody.append('email', user_email);
+    requestBody.append('phone_number', user_phone);
+    requestBody.append('user_name', user_username);
+    requestBody.append('user_type', user_type);
+
+    const response = await axios.post('/users',{
+      name: user_realName,
+      password: user_password,
+      email: user_email,
+      phone_number: user_phone,
+      user_name: user_username,
+      user_type: user_type
+    });
+
+    console.log(response);
+
+    return response;
+  } catch (error) {
+    console.error(error);
+
+    return error.response;
+  }
+};
+
 export const isAdmin = async (user_email) => {
   try {    
     const response = await axios.post("/isUserAdmin", {user_email: user_email});
-    if (response.status != 200){
+    if (response.status !== 200){
       return false;
     }
     //console.log("is admin? "+JSON.stringify(response.data.indeedAdmin) + user_email);
@@ -117,12 +150,12 @@ export const deleteUser = async (user_id) => {
 export const editUser = async (user, user_id) => {
   try {
 
-    const route = "/user/".concat(user_id);
+    const route = "/users/".concat(user_id);
     const response = await axios.put(route, user);
     console.log(response);
     return response;
-  } catch (err) {
-    console.error(err);
-    return err;
+  } catch (error) {
+    console.error(error);
+    return error.response;
   }
 };
