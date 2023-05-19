@@ -9,7 +9,7 @@ import { Income }         from './Pages/Income/Income';
 import { Outcome }        from './Pages/Outcome/Outcome';
 import { Client }         from './Pages/Client/Client';
 import { ProfileUser }    from './Pages/Profile/Profile';
-import { Profits }        from './Pages/Profits/Profits';
+import  Profits           from './Pages/Profits/Profits';
 import { CreateEmployee } from './Pages/CreateEmployee/CreateEmployee';
 import Error404           from './Pages/Error/Error404';
 
