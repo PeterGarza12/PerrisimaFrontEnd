@@ -4,6 +4,7 @@ import LoginForm from "../../Components/LoginForm/LoginForm";
 import './Login.css';
 import { getUserByEmail } from "../../services/usersService";
 import { useNavigate } from "react-router-dom";
+import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
 
 export const Login = () => {
 
@@ -22,15 +23,11 @@ export const Login = () => {
                 }
                 else if (response.status === 401)
                 {
-                    Swal.fire({
-                        title: 'Credenciales incorrectas',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                      });
+                    mistakeMessage();
                 }
                 else
                 {
-                    alert("Algo salió mal, vuelva a intentarlo más tarde");
+                    tryLater();
                 }
             }}/>
         </div>

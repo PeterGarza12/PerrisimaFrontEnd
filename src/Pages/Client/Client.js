@@ -5,6 +5,8 @@ import ModifyClient from "../../Components/ClientForms/ModifyClient";
 import DeleteClient from "../../Components/ClientForms/DeleteClient";
 import { ClientCreate, ClientModify, ClientDelete} from "../../services/clientsService";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
 
 export const Client = () => {
     const [option, setOption] = useState(1);
@@ -27,15 +29,21 @@ export const Client = () => {
         
                         if (response.status === 201)
                         {
-                            navigate("/main");
+                            Swal.fire({
+                                title: 'Clienta creada con éxito',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then(function() {
+                                navigate("/main");
+                            });
                         }
                         else if (response.status === 401)
                         {
-                            alert("Credenciales incorrectas");
+                            mistakeMessage();
                         }
                         else
                         {
-                            alert("Algo salió mal, vuelva a intentarlo más tarde");
+                            tryLater();
                         }
                     }}/>
                 ) : option===2 ? (
@@ -44,15 +52,21 @@ export const Client = () => {
         
                         if (response.status === 200)
                         {
-                            navigate("/main");
+                            Swal.fire({
+                                title: 'Clienta modificada con éxito',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then(function() {
+                                navigate("/main");
+                            });
                         }
                         else if (response.status === 401)
                         {
-                            alert("Credenciales incorrectas");
+                            mistakeMessage();
                         }
                         else
                         {
-                            alert("Algo salió mal, vuelva a intentarlo más tarde");
+                            tryLater();
                         }
                     }}/>
                 ) : (
@@ -61,15 +75,21 @@ export const Client = () => {
         
                         if (response.status === 200)
                         {
-                            navigate("/main");
+                            Swal.fire({
+                                title: 'Clienta eliminada con éxito',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then(function() {
+                                navigate("/main");
+                            });
                         }
                         else if (response.status === 401)
                         {
-                            alert("Credenciales incorrectas");
+                            mistakeMessage();
                         }
                         else
                         {
-                            alert("Algo salió mal, vuelva a intentarlo más tarde");
+                            tryLater();
                         }
                     }}/>
                 )

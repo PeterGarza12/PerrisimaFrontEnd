@@ -49,10 +49,7 @@ export default function CreateClient(props){
           }).then((result) => {
             if(result.isConfirmed){
                 props.onCreateClient(Name, Lastname, Phone);
-                Swal.fire({
-                    title: 'Creación exitosa',
-                    icon: 'success',
-                  })
+               
             }
           })
         //

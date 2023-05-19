@@ -2,6 +2,7 @@ import React from "react";
 import OutcomeForm from "../../Components/OutcomeForm/OutcomeForm";
 import { useNavigate } from "react-router-dom";
 import { OutcomeCreate } from "../../services/outcomeService";
+import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
 
 export const Outcome = () => {
 
@@ -21,11 +22,11 @@ export const Outcome = () => {
                         }
                         else if (response.status === 401)
                         {
-                            alert("Credenciales incorrectas");
+                            mistakeMessage();
                         }
                         else
                         {
-                            alert("Algo salió mal, vuelva a intentarlo más tarde");
+                            tryLater();
                         }
                     }}/>
         </div>

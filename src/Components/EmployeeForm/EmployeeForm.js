@@ -60,10 +60,7 @@ export default function EmployeeForm(props){
           }).then((result) => {
             if(result.isConfirmed){
                 props.onCreateEmployee(Name, Lastname, Email, Phone, Username);
-                Swal.fire({
-                    title: 'Creación exitosa',
-                    icon: 'success',
-                  })
+                
             }
           })
 

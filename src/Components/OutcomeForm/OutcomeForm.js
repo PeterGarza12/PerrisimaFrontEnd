@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './OutcomeForm.css'
-import { dataMissing } from "../Alerts/Alerts";
+import { dataMissing, successMessage } from "../Alerts/Alerts";
 
 
 export default function OutcomeForm(props){
@@ -38,6 +38,7 @@ export default function OutcomeForm(props){
             return;
         }
 
+        successMessage("Egreso registrado con éxito");
         props.onRegisterOutcome(category, comment, gasto, user.id);
     }
 
