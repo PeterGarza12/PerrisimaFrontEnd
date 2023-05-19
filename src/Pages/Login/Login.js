@@ -4,6 +4,8 @@ import LoginForm from "../../Components/LoginForm/LoginForm";
 import './Login.css';
 import { getUserByEmail } from "../../services/usersService";
 import { useNavigate } from "react-router-dom";
+import { CardImg } from "reactstrap";
+import LogoNegro from './../../Res/perrisima-color.png';
 
 export const Login = () => {
 
@@ -11,7 +13,15 @@ export const Login = () => {
 
     return(
         <div className="Login-page">
-            <h1>Aquí va la imagen del logo</h1>
+            <CardImg
+            className="img-fluid"
+              alt="Perrísima"
+              src={LogoNegro}
+              style={{
+                  width: "auto",
+                  height: "40%",
+              }}
+            />
             <LoginForm onLogin={async (email,password) => {
                 var response = await getUserByEmail(email, password);
 
