@@ -3,6 +3,7 @@ import EmployeeForm from "../../Components/EmployeeForm/EmployeeForm";
 import './CreateEmployee.css'
 import { postCreateEmployee } from "../../services/usersService";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export const CreateEmployee = () => {
 
@@ -18,15 +19,29 @@ export const CreateEmployee = () => {
 
                 if (response.status === 201)
                 {
-                    navigate("/main");
+                    Swal.fire({
+                        title: 'Usuario creado con éxito',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    }).then(function() {
+                        navigate("/main");
+                    });
                 }
                 else if (response.status === 401)
                 {
-                    alert("Información incorrecta");
+                    Swal.fire({
+                        title: 'Información incorrecta',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
                 }
                 else
                 {
-                    alert("Algo salió mal, vuelva a intentarlo más tarde");
+                    Swal.fire({
+                        title: 'Algo salió mal, vuelva a intentarlo más tarde',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
                 }
             }}/>
         </div>
