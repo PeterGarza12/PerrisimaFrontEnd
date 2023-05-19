@@ -3,11 +3,8 @@ import { MultiSelect } from "react-multi-select-component";
 import './Income.css'
 import { getClientByPhone } from "../../services/clientsService";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { dataMissing } from "../Alerts/Alerts";
-=======
 import $ from "jquery";
->>>>>>> 761c1ee828a9ce3d4559d89eabb24060acaa8696
+import { dataMissing } from "../Alerts/Alerts";
 
 export default function IncomeForm(props){
 
