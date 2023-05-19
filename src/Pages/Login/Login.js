@@ -15,12 +15,12 @@ export const Login = () => {
             <LoginForm onLogin={async (email,password) => {
                 var response = await getUserByEmail(email, password);
 
-                if (response.status == 200)
+                if (response.status === 200)
                 {
                     window.sessionStorage.setItem("user", JSON.stringify(response.data));
                     navigate("/main");
                 }
-                else if (response.status == 401)
+                else if (response.status === 401)
                 {
                     Swal.fire({
                         title: 'Credenciales incorrectas',

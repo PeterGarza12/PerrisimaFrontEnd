@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './FormsClient.css'
 
-export default function CreateClient(){
+export default function CreateClient(props){
     
     
     const [Name, setName] = useState("");
@@ -21,9 +21,14 @@ export default function CreateClient(){
         setPhone(event.target.value);
     };
 
+     const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        props.onCreateClient(Name, Lastname, Phone);
+    }
     return(
         <div className="login-form d-flex justify-content-center">
-            <form className="col-xl-7 col-lg-8 col-md-10 col-11 d-flex flex-column justify-content-between">
+            <form onSubmit={handleFormSubmit} className="col-xl-7 col-lg-8 col-md-10 col-11 d-flex flex-column justify-content-between">
                 <h1 className="h1-form createClientForm">Información de clienta nueva</h1>
                 
                 <label>

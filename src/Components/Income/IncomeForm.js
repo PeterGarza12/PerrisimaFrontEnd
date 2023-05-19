@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import './Income.css'
+import { getClientByPhone } from "../../services/clientsService";
+import { useNavigate } from "react-router-dom";
+import $ from "jquery";
 
-export default function IncomeForm(){
+export default function IncomeForm(props){
 
     let infoComboBox = [
         {label: "Uñas acrílico", value: "Uñas acrílico", price: 350},
@@ -29,7 +32,21 @@ export default function IncomeForm(){
     const [selected, setSelected] = useState([]);
     const [money, setMoney] = useState(0);
     const [personalized, setPersonalized] = useState(0);
+    const [phone, setPhone] = useState("");
+    const [category, setCategory] = useState(2);
+    const [clientid, setClient] = useState("");
+    const [comment, setComment] = useState("");
 
+    const navigate = useNavigate();
+    
+    const handleCategory = (event) =>{
+        setCategory(event.target.value);
+    }
+
+    const handlePhoneChange =(event) => {
+        setPhone(event.target.value);
+    };
+    
     const handlePersonalized = (event) =>{
         let valor = event.target.value;
         if(valor===""){
@@ -43,45 +60,115 @@ export default function IncomeForm(){
     const addMoney = ()=>{
 
         let precio = 0;
+        let comentario = "";
 
         for(let i = 0; i<selected.length; i++){
             precio += selected[i].price;
+            comentario += selected[i].value + ", ";
         }
         precio+=personalized;
-        setMoney(precio);        
+        setMoney(precio); 
+        setComment(comentario);       
+    }
+
+    function updateFields(){
+        $(".aftersearch").removeAttr("hidden");
+
+    }
+
+    function hideFields(){
+        $(".aftersearch").attr("hidden",true);
+        $("#name").val("");
+        $("#phone").val("");
+        clientid = null;
+    }
+
+    const handleSearchClient = async (e) => {
+        e.preventDefault();
+
+        let phoneregex = /(^[\d]{10}$)/;
+        if(!phoneregex.test(phone))
+        {
+          alert("Rellene el campo correctamente");
+          hideFields();
+          return;
+        } else {
+
+            var response = await getClientByPhone(phone);
+            
+            if (response.status === 200)
+            {
+                document.getElementById("name").value = response.data.name;
+                document.getElementById("phone").value = response.data.phone_number;
+                let clientid = response.data.id;
+                setClient(clientid);
+                console.log(clientid);
+                updateFields();
+            }
+            else if (response.response.status === 404)
+            {
+                alert("Cliente no encontrado");
+                hideFields();
+            }
+            else
+            {
+                alert("Algo salió mal, vuelva a intentarlo más tarde");
+                hideFields();
+            }
+    
+        }
+        
+    }
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+
+        // if(selected.size <= 0){
+        //     alert('Error en los datos');
+        //     return;
+        // } else if(clientid == null || clientid == ""){
+        //     alert('Error en los datos');
+        //     return;
+        // } else if(money == null || money == ""){
+        //     alert('Error en los datos');
+        //     return;
+        // }
+        props.onIncomeCreate(money,category,comment,clientid);
     }
 
     console.log("precio:", money);
 
     return(
         <div className="login-form d-flex justify-content-center">
-            <form className="col-xl-7 col-lg-8 col-md-10 col-11 d-flex flex-column justify-content-between">
+            <form onSubmit={handleFormSubmit} className="col-xl-7 col-lg-8 col-md-10 col-11 d-flex flex-column justify-content-between">
                 <h1 className="h1-form">Venta</h1>
 
                 <label>
                     Buscar clienta
                     <div id="form" role="search" className="col-xl-7 col-lg-8 col-md-10 col-11">
-                        <input className="col-10" type="search" id="query" name="q" placeholder="Ingrese teléfono o ID de la clienta que atendió" aria-label="Search through site content"></input>
-                        <button className="col-2">Buscar</button>
+                        <input className="col-10" type="search" id="query" name="q" value={phone} onChange={handlePhoneChange} placeholder="Ingrese teléfono de la clienta que atendió" aria-label="Search through site content"></input>
+                        <button onClick={handleSearchClient} id="searchclient" className="col-2">Buscar</button>
                     </div>
                 </label>
 
                 <label>
                     Nombre
-                    <input className="col-12" type="text" placeholder="Name" disabled></input>
-                </label>
-
-                <label>
-                    Apellido
-                    <input className="col-12" type="text" placeholder="Lastname" disabled></input>
+                    <input id="name" className="col-12" type="text" placeholder="Name" disabled></input>
                 </label>
 
                 <label>
                     Teléfono
-                    <input className="col-12" type="number" placeholder="Phone" disabled></input>
+                    <input id="phone" className="col-12" type="number" placeholder="Phone" disabled></input>
                 </label>
 
-                <label>
+                <label for="categorias" className="aftersearch" hidden>Categoría del gasto realizado</label>
+                    <select name="categorias" id="categorias" className="col-11 aftersearch" hidden onClick={handleCategory}>
+                        <option value="2">      Producto pestañas   </option>
+                        <option value="3">          Producto uñas       </option>
+                        <option value="4">   Producto extensiones</option>
+                    </select>
+
+                <label className="aftersearch" hidden>
                     Servicio/s dado/s
                     <MultiSelect
                     options={infoComboBox}
@@ -90,19 +177,19 @@ export default function IncomeForm(){
                     labelledBy="Servicio"></MultiSelect>
                 </label>
 
-                <label>
+                <label className="aftersearch" hidden>
                     Precio de servicio personalizado
                     <input className="col-12" type="number" placeholder="0" defaultValue={0} onChange={handlePersonalized}></input>
                 </label>
 
-                    <div className="btnDiv col-3" onClick={addMoney}>
-                        Calcular precio total
-                    </div>
-
-                <div className="d-flex flex-row justify-content-center">
+                <div className="btnDiv col-3 aftersearch" hidden onClick={addMoney}>
+                    Calcular precio total
                 </div>
 
-                <label>
+                <div className="d-flex flex-row justify-content-center aftersearch" hidden>
+                </div>
+
+                <label className="aftersearch" hidden>
                     Precio final
                     <input className="col-12" type="number" placeholder={money} ></input>
                 </label>
@@ -110,7 +197,7 @@ export default function IncomeForm(){
 
 
                 <div className="d-flex flex-row justify-content-center">
-                    <button className="btn-form col-xl-6 col-lg-9 col-md-10 col-11" type="submit">
+                    <button className="btn-form col-xl-6 col-lg-9 col-md-10 col-11 aftersearch" hidden type="submit">
                         Registrar venta
                     </button>
                 </div>
