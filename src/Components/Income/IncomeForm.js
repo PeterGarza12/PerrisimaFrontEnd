@@ -3,6 +3,7 @@ import { MultiSelect } from "react-multi-select-component";
 import './Income.css'
 import { getClientByPhone } from "../../services/clientsService";
 import { useNavigate } from "react-router-dom";
+import { dataMissing } from "../Alerts/Alerts";
 
 export default function IncomeForm(props){
 
@@ -62,6 +63,7 @@ export default function IncomeForm(props){
 
     const handleSearchClient = async (e) => {
         e.preventDefault();
+
 
         let phoneregex = /(^[\d]{10}$)/;
         if(!phoneregex.test(phone))
