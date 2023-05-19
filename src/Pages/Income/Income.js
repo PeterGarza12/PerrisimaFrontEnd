@@ -1,9 +1,6 @@
 import React from "react";
 import IncomeForm from "../../Components/Income/IncomeForm";
-<<<<<<< HEAD
-=======
 import { createIncome } from "../../services/incomeService";
->>>>>>> 761c1ee828a9ce3d4559d89eabb24060acaa8696
 import { useNavigate } from "react-router-dom";
 
 export const Income = () => {
