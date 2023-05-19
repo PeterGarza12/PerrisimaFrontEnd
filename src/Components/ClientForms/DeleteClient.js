@@ -65,10 +65,6 @@ export default function DeleteClient(props){
               }).then((result) => {
                 if(result.isConfirmed){
                     props.onDeleteClient(Id, Name, Lastname, Phone);
-                    Swal.fire({
-                        title: 'Edición exitosa',
-                        icon: 'success',
-                      })
                 }
               })
             

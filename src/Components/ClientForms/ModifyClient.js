@@ -71,10 +71,6 @@ export default function ModifyClient(props){
           }).then((result) => {
             if(result.isConfirmed){
                 props.onModifyClient(Id, Name, Lastname, Phone);
-                Swal.fire({
-                    title: 'Edición exitosa',
-                    icon: 'success',
-                  })
             }
           })
     }

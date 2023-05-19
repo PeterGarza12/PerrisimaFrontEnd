@@ -4,7 +4,7 @@ import './Income.css'
 import { getClientByPhone } from "../../services/clientsService";
 import { useNavigate } from "react-router-dom";
 import $ from "jquery";
-import { dataMissing } from "../Alerts/Alerts";
+import { dataMissing, successMessage } from "../Alerts/Alerts";
 
 export default function IncomeForm(props){
 
@@ -125,12 +125,14 @@ export default function IncomeForm(props){
     const handleFormSubmit = (e) => {
         e.preventDefault();
         
-        if(selected.data === undefined || money === 0)
+        if(selected.length === 0 || money === 0)
         {
+            console.log(selected, money);
             dataMissing("Servicio dado y precio final");
             return;
         }
 
+        successMessage("Ingreso creado con éxito");
         props.onIncomeCreate(money,category,comment,clientid);
     }
 

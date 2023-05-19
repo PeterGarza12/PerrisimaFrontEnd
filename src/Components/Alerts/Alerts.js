@@ -7,3 +7,29 @@ export const dataMissing = (mensaje) => {
         confirmButtonText: 'Ok'
       });
 };
+
+export const successMessage = (mensaje) => {
+  Swal.fire({
+      title: mensaje,
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    });
+};
+
+export const mistakeMessage = () => {
+  Swal.fire({
+    title: 'Información incorrecta',
+    icon: 'error',
+    confirmButtonText: 'Ok'
+  });
+};
+
+export const tryLater = () => {
+  Swal.fire({
+    title: 'Algo salió mal, vuelva a intentarlo más tarde',
+    icon: 'error',
+    confirmButtonText: 'Ok'
+});
+};
+
+

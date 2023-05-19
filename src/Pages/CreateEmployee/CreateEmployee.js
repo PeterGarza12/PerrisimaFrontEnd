@@ -4,6 +4,7 @@ import './CreateEmployee.css'
 import { postCreateEmployee } from "../../services/usersService";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
 
 export const CreateEmployee = () => {
 
@@ -29,19 +30,11 @@ export const CreateEmployee = () => {
                 }
                 else if (response.status === 401)
                 {
-                    Swal.fire({
-                        title: 'Información incorrecta',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
+                    mistakeMessage();
                 }
                 else
                 {
-                    Swal.fire({
-                        title: 'Algo salió mal, vuelva a intentarlo más tarde',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
+                    tryLater();
                 }
             }}/>
         </div>
