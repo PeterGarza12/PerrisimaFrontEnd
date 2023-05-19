@@ -56,7 +56,7 @@ export const createPost = async (post) => {
 };
 
 export const destroypost = async (postId) => {
-  if (window.confirm("¿Estás seguro que quieres eliminar tu rima?")) {
+  if (window.confirm("¿Estás segura que quieres eliminar tu rima?")) {
       //const response = await axios({ url: "/students", method: "get" });
       try {
         const route = "/post/" + postId;

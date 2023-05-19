@@ -81,7 +81,7 @@ export default function IncomeForm(props){
         $(".aftersearch").attr("hidden",true);
         $("#name").val("");
         $("#phone").val("");
-        clientid = null;
+        setClient(null);
     }
 
     const handleSearchClient = async (e) => {
@@ -124,17 +124,13 @@ export default function IncomeForm(props){
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        
+        if(selected.data === undefined || money === 0)
+        {
+            dataMissing("Servicio dado y precio final");
+            return;
+        }
 
-        // if(selected.size <= 0){
-        //     alert('Error en los datos');
-        //     return;
-        // } else if(clientid == null || clientid == ""){
-        //     alert('Error en los datos');
-        //     return;
-        // } else if(money == null || money == ""){
-        //     alert('Error en los datos');
-        //     return;
-        // }
         props.onIncomeCreate(money,category,comment,clientid);
     }
 

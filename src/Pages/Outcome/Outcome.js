@@ -15,11 +15,7 @@ export const Outcome = () => {
                         var response = await OutcomeCreate(category, comment, total, userid);
         
                         
-<<<<<<< HEAD
-                        if (response.status === 201)
-=======
                         if (response.status === 200  || response.status === 201)
->>>>>>> 761c1ee828a9ce3d4559d89eabb24060acaa8696
                         {
                             navigate("/main");
                         }

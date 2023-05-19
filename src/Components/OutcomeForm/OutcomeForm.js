@@ -1,13 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import './OutcomeForm.css'
+import { dataMissing } from "../Alerts/Alerts";
 
 
 export default function OutcomeForm(props){
 
     const [category, setCategory] = useState(1);
-    const [comment, setComment] = useState();
-    const [gasto, setGasto] = useState();
+    const [comment, setComment] = useState("");
+    const [gasto, setGasto] = useState("");
     
     const handleCategory = (event) =>{
 
@@ -29,7 +30,14 @@ export default function OutcomeForm(props){
         e.preventDefault();
         let user = JSON.parse(window.sessionStorage.getItem("user"));
        
-        console.log("userid: ", user);
+        console.log(comment);
+
+        if(comment === "" || gasto === "")
+        {
+            dataMissing("Comentario y Gasto total");
+            return;
+        }
+
         props.onRegisterOutcome(category, comment, gasto, user.id);
     }
 

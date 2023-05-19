@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { dataMissing } from "../Alerts/Alerts";
+import Swal from "sweetalert2";
 
 export default function EmployeeForm(props){
     
@@ -31,7 +33,41 @@ export default function EmployeeForm(props){
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
-        props.onCreateEmployee(Name, Lastname, Email, Phone, Username);
+        let datos = "";
+        if(Name === "")
+        datos += "Nombre. ";
+        if(Lastname === "")
+        datos += "Apellido. ";
+        if(Phone === "")
+        datos += "Teléfono. ";
+        if(Username === "")
+        datos += "Nombre de usuario. ";
+        if(Email === "")
+        datos += "Email. ";
+        
+        if(datos!== ""){
+            dataMissing(datos);
+        }
+
+        Swal.fire({
+            title: '¿Está segura de crear empleada?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, continuar',
+            cancelButtonText: 'Regresar'
+          }).then((result) => {
+            if(result.isConfirmed){
+                props.onCreateEmployee(Name, Lastname, Email, Phone, Username);
+                Swal.fire({
+                    title: 'Creación exitosa',
+                    icon: 'success',
+                  })
+            }
+          })
+
+        
     }
 
     return(

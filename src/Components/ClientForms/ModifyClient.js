@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './FormsClient.css'
 import { getClientByPhone } from "../../services/clientsService";
 import $ from "jquery";
+import Swal from "sweetalert2";
 
 export default function ModifyClient(props){
 
@@ -25,7 +26,6 @@ export default function ModifyClient(props){
     };
 
     const handleSearchClient = async (e) => {
-        console.log("holi");
         e.preventDefault();
 
        console.log(Phone);
@@ -35,11 +35,14 @@ export default function ModifyClient(props){
             if (response.status === 200)
             {
                 let name = response.data.name.split(" ");
-                document.getElementById("name").value = name[0];
-                document.getElementById("lastname").value = name[1];
-                document.getElementById("phone").value = response.data.phone_number;
+
+                setName(name[0]);
+                setLastname(name[1]);
+                setPhone(response.data.phone_number);
+
                 $( ".enabling" ).prop( "disabled", false );
                 $( ".hidden" ).prop( "hidden", false );
+
                 setId(response.data.id);
                 
             }
@@ -52,14 +55,28 @@ export default function ModifyClient(props){
                 alert("Algo salió mal, vuelva a intentarlo más tarde");
             }
             
-            //props.onClientSearch(Phone);
         
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
-        props.onModifyClient(Id, Name, Lastname, Phone);
+        Swal.fire({
+            title: '¿Está segura de modificar clienta?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, continuar',
+            cancelButtonText: 'Regresar'
+          }).then((result) => {
+            if(result.isConfirmed){
+                props.onModifyClient(Id, Name, Lastname, Phone);
+                Swal.fire({
+                    title: 'Edición exitosa',
+                    icon: 'success',
+                  })
+            }
+          })
     }
 
     return(

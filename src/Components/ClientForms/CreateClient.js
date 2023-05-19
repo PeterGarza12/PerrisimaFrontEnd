@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import './FormsClient.css'
+import { dataMissing } from "../Alerts/Alerts";
+import Swal from "sweetalert2";
 
 export default function CreateClient(props){
     
@@ -23,8 +25,37 @@ export default function CreateClient(props){
 
      const handleFormSubmit = (e) => {
         e.preventDefault();
+        
+        let datos = "";
+        if(Name === "")
+        datos += "Nombre. ";
+        if(Lastname === "")
+        datos += "Apellido. ";
+        if(Phone === "")
+        datos += "Teléfono. ";
+        
+        if(datos!== ""){
+            dataMissing(datos);
+        }
 
-        props.onCreateClient(Name, Lastname, Phone);
+        Swal.fire({
+            title: '¿Está segura de crear clienta?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, continuar',
+            cancelButtonText: 'Regresar'
+          }).then((result) => {
+            if(result.isConfirmed){
+                props.onCreateClient(Name, Lastname, Phone);
+                Swal.fire({
+                    title: 'Creación exitosa',
+                    icon: 'success',
+                  })
+            }
+          })
+        //
     }
     return(
         <div className="login-form d-flex justify-content-center">
