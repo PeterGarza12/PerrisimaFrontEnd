@@ -23,6 +23,17 @@ function Profits() {
       const [total, setTotal] = useState(0);
       var totalsum = 0;
 
+      useEffect(() => {
+        const getAllData = async () => {
+          const data = await getAll();
+          data.forEach(getTotal);
+          setDataTable(data);
+       }
+     
+       getAllData();
+      }, []);
+
+
       const handlePhoneChange =(event) => {
         setPhone(event.target.value);
     };
@@ -53,7 +64,6 @@ function Profits() {
       delete item["amount"];
       }
     }
-
 
       const handleFilters = async (e) => {
         e.preventDefault();
