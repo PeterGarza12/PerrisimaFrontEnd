@@ -16,9 +16,10 @@ export const successMessage = (mensaje) => {
     });
 };
 
-export const mistakeMessage = () => {
+export const mistakeMessage = (mensaje = "") => {
   Swal.fire({
     title: 'Información incorrecta',
+    text: mensaje,
     icon: 'error',
     confirmButtonText: 'Ok'
   });

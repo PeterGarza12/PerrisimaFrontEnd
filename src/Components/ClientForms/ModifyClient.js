@@ -3,6 +3,7 @@ import './FormsClient.css'
 import { getClientByPhone } from "../../services/clientsService";
 import $ from "jquery";
 import Swal from "sweetalert2";
+import { tryLater, mistakeMessage } from "../Alerts/Alerts";
 
 export default function ModifyClient(props){
 
@@ -48,11 +49,11 @@ export default function ModifyClient(props){
             }
             else if (response.response.status === 404)
             {
-                alert("Cliente no encontrado");
+                mistakeMessage("Cliente no encontrado");
             }
             else
             {
-                alert("Algo salió mal, vuelva a intentarlo más tarde");
+                tryLater();
             }
             
         
