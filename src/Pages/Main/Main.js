@@ -10,7 +10,7 @@ import perfil from './../../Res/perfil.png'
 import ganancias from './../../Res/ganancias.png'
 import empleados from './../../Res/empleados.png'
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 const mainFunctions =(
     <ListOfFunctions
         functions={[
@@ -51,9 +51,11 @@ const mainFunctions =(
 
 export const Main = () => {
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const signOut = () => {
         window.sessionStorage.removeItem("user");
+        setIsLoggedIn(false);
         navigate("/");
     }
 
@@ -61,7 +63,6 @@ export const Main = () => {
 
     return(
         <div className="mainPage d-flex flex-column">
-            {/* Imagen de portada */}
             <CardImg
                 alt="Card image cap"
                 src={portada}
