@@ -1,13 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './ProfileForm.css'
 import $ from "jquery";
 import { editUser } from "../../services/usersService";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import { updateSessionStorageUser } from "../../Utils/sessionStorage";
+import VerifyLogIn from "../../verifyLogin";
 
 export default function ProfileForm(){
 
+    const [Name, setName] = useState("");
+    const [Username, setUsername] = useState("");
+    const [Email, setEmail] = useState("");
+    const [Phone, setPhone] = useState("");
+
     var user = JSON.parse(window.sessionStorage.getItem("user"));
+    // if(user!== null){
+    //     setName(user.name);
+    //     setUsername(user.user_name);
+    //     setEmail(user.email);
+    //     setPhone(user.user_phone);
+    // }
+
+    const navigate = useNavigate();
+    
+    const backToLogIn = () => {
+        let flag = VerifyLogIn();
+       if(flag===null){
+       navigate("/");
+       }
+       else{
+        console.log(flag);
+        setName(flag.name);
+        setUsername(flag.user_name);
+        setEmail(flag.email);
+        setPhone(flag.phone_number);
+       }
+   }
+
+   useEffect(() => {
+           backToLogIn();
+   }, [backToLogIn]);
     
     const [ActualPassword, setActualPassword] = useState("");
     const handleActualPasswordChange =(event) => {
@@ -110,22 +143,22 @@ export default function ProfileForm(){
                 
                 <label>
                     Nombre completo
-                    <input className="disabled col-12" type="text" disabled value={user.name}></input>
+                    <input className="disabled col-12" type="text" disabled value={Name}></input>
                 </label>
 
                 <label>
                     Nombre de usuario
-                    <input className="disabled col-12" type="text" disabled value={user.user_name}></input>
+                    <input className="disabled col-12" type="text" disabled value={Username}></input>
                 </label>
 
                 <label>
                     Email
-                    <input className="disabled col-12" type="email" value={user.email} disabled></input>
+                    <input className="disabled col-12" type="email" value={Email} disabled></input>
                 </label>
 
                 <label>
                     Teléfono
-                    <input className="disabled col-12" type="number" value={user.phone_number} disabled></input>
+                    <input className="disabled col-12" type="number" value={Phone} disabled></input>
                 </label>
 
                 <div id="passwords" className="col-12 flex-column justify-content-center align-items-center">

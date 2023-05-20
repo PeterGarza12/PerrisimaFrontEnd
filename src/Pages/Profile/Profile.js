@@ -6,18 +6,21 @@ import { useNavigate } from "react-router-dom";
 
 export const ProfileUser = () => {
 
-    const navigate = useNavigate();
+//     const navigate = useNavigate();
     
-    const backToLogIn = () => {
-        let flag = VerifyLogIn();
-       if(flag===null){
-       navigate("/");
-       }
-   }
+//     const backToLogIn = () => {
+//         let flag = VerifyLogIn();
+//        if(flag===null){
+//        navigate("/");
+//        }
+//        else{
+//         console.log("sí llega");
+//        }
+//    }
 
-   useEffect(() => {
-           backToLogIn();
-   }, [backToLogIn]);
+//    useEffect(() => {
+//            backToLogIn();
+//    }, [backToLogIn]);
     
     return(
         <div className="createEmployeePage">
