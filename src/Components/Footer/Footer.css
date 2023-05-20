@@ -3,7 +3,7 @@
   bottom: 0;
   width: 100%;
   transform: translateY(100%);
-
+  padding: 5px 0px;
   background-color: #520f99;
   color: white;
   text-align: center;

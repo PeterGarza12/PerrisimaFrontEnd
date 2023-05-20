@@ -1,6 +1,22 @@
+@font-face {
+  font-family: Poppins;
+  src: url('/src/Res/Poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+  font-family: Poppins-Regular;
+  src: url('/src/Res/Poppins/Poppins-Regular.ttf');
+}
+
 .App {
   text-align: center;
   height: 100%;
+  font-family: Poppins;
+}
+
+.App input {
+  font-family: Poppins-Regular;
+  font-size: 14px;
 }
 
 .App-logo {

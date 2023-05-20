@@ -28,7 +28,7 @@ function App() {
   };
 
   useEffect(() => {
-    setIsLoggedIn(!!user); // Set isLoggedIn based on the presence of the user
+    setIsLoggedIn(!!user);
   }, [requireAuth]);
 
   return (

@@ -144,7 +144,7 @@ export default function IncomeForm(props){
                     Buscar clienta
                     <div id="form" role="search" className="col-xl-7 col-lg-8 col-md-10 col-11">
                         <input className="col-10" type="search" id="query" name="q" value={phone} onChange={handlePhoneChange} placeholder="Ingrese teléfono de la clienta que atendió" aria-label="Search through site content"></input>
-                        <button onClick={handleSearchClient} id="searchclient" className="col-2">Buscar</button>
+                        <button onClick={handleSearchClient} id="searchclient" className="searchclient col-2">Buscar</button>
                     </div>
                 </label>
 
