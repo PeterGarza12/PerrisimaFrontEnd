@@ -40,7 +40,12 @@ export const Login = () => {
                 }
                 else
                 {
-                    alert("Algo salió mal, vuelva a intentarlo más tarde");
+                    Swal.fire({
+                        title: 'Algo salió mal',
+                        text: 'Vuelva a intentarlo más tarde',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                      });
                 }
             }}/>
         </div>

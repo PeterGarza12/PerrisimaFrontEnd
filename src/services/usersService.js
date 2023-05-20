@@ -1,5 +1,6 @@
 import { AxiosConfig as axios } from "./axiosConfig";
-
+import Swal
+ from "sweetalert2";
 export const getUsers = async (page) => {
   //const response = await axios({ url: "/students", method: "get" });
   try {
@@ -51,7 +52,12 @@ export const createUser = async (user) => {
 
   } catch (err) {
     console.error(err);
-    return "Ocurrió un error inesperado";
+    Swal.fire({
+      title: 'Algo salió mal',
+      text: 'Vuelva a intentarlo más tarde',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
   }
 };
 
@@ -71,7 +77,12 @@ export const getUserByEmail = async (user_email, user_password) => {
     return response;
   } catch (error) {
     console.error(error);
-
+    Swal.fire({
+      title: 'Algo salió mal',
+      text: 'Vuelva a intentarlo más tarde',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
     return error.response;
   }
 };
@@ -104,7 +115,12 @@ export const postCreateEmployee = async (user_name,user_lastname,user_email,user
     return response;
   } catch (error) {
     console.error(error);
-
+    Swal.fire({
+      title: 'Algo salió mal',
+      text: 'Vuelva a intentarlo más tarde',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
     return error.response;
   }
 };
@@ -143,6 +159,12 @@ export const deleteUser = async (user_id) => {
     return response;
   } catch (err) {
     console.error(err);
+    Swal.fire({
+      title: 'Algo salió mal',
+      text: 'Vuelva a intentarlo más tarde',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
     return err;
   }
 };
@@ -156,6 +178,12 @@ export const editUser = async (user, user_id) => {
     return response;
   } catch (error) {
     console.error(error);
+    Swal.fire({
+      title: 'Algo salió mal',
+      text: 'Vuelva a intentarlo más tarde',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
     return error.response;
   }
 };
