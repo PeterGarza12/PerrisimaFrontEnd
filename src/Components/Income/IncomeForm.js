@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import './Income.css'
 import { getClientByPhone } from "../../services/clientsService";
-import { useNavigate } from "react-router-dom";
 import $ from "jquery";
-import { dataMissing, successMessage } from "../Alerts/Alerts";
+import { dataMissing, successMessage, mistakeMessage } from "../Alerts/Alerts";
 
 export default function IncomeForm(props){
 
@@ -37,8 +36,6 @@ export default function IncomeForm(props){
     const [category, setCategory] = useState(2);
     const [clientid, setClient] = useState("");
     const [comment, setComment] = useState("");
-
-    const navigate = useNavigate();
     
     const handleCategory = (event) =>{
         setCategory(event.target.value);
@@ -91,11 +88,12 @@ export default function IncomeForm(props){
         let phoneregex = /(^[\d]{10}$)/;
         if(!phoneregex.test(phone))
         {
-          alert("Rellene el campo correctamente");
-          hideFields();
-          return;
-        } else {
-
+            mistakeMessage("Introduzca el número telefónico de 10 dígitos");
+            hideFields();
+            return;
+        } 
+        else 
+        {
             var response = await getClientByPhone(phone);
             
             if (response.status === 200)
@@ -109,15 +107,14 @@ export default function IncomeForm(props){
             }
             else if (response.response.status === 404)
             {
-                alert("Cliente no encontrado");
+                mistakeMessage("Cliente no encontrado");
                 hideFields();
             }
             else
             {
-                alert("Algo salió mal, vuelva a intentarlo más tarde");
+                mistakeMessage("Algo salió mal, vuelva a intentarlo más tarde");
                 hideFields();
             }
-    
         }
         
     }

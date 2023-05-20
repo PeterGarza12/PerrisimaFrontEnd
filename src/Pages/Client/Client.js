@@ -29,6 +29,7 @@ export const Client = () => {
         
                         if (response.status === 201)
                         {
+                            
                             Swal.fire({
                                 title: 'Clienta creada con éxito',
                                 icon: 'success',
@@ -37,9 +38,9 @@ export const Client = () => {
                                 navigate("/main");
                             });
                         }
-                        else if (response.status === 401)
+                        else if (response.status === 422)
                         {
-                            mistakeMessage();
+                            mistakeMessage("Ya existe un cliente con el mismo número de teléfono");
                         }
                         else
                         {

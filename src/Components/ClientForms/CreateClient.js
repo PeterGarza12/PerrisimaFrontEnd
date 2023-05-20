@@ -49,7 +49,6 @@ export default function CreateClient(props){
           }).then((result) => {
             if(result.isConfirmed){
                 props.onCreateClient(Name, Lastname, Phone);
-               
             }
           })
         //
