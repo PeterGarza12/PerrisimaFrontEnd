@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { getAll, getDataByFilters } from "../../services/profitService";
 import $ from "jquery";
 import { dataNotFound } from "../../Components/Alerts/Alerts";
+import { useNavigate } from "react-router-dom";
+import VerifyLogIn from "../../verifyLogin";
 
 
 const Headers = (
@@ -25,7 +27,17 @@ function Profits() {
       const [total, setTotal] = useState(0);
       var totalsum = 0;
 
+      let navigate = useNavigate();
+      const backToLogIn = () => {
+        let flag = VerifyLogIn();
+       if(flag===null){
+       navigate("/");
+       }
+   }
+
+
       useEffect(() => {
+        backToLogIn();
         const getAllData = async () => {
           const data = await getAll();
 

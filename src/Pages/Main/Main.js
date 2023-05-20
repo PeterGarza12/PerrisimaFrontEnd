@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './Main.css'
 import { CardImg, Container } from "reactstrap";
 import portada from './../../Res/portada.jpg';
@@ -11,6 +11,9 @@ import ganancias from './../../Res/ganancias.png'
 import empleados from './../../Res/empleados.png'
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+import VerifyLogIn from "../../verifyLogin";
+
 const mainFunctions =(
     <ListOfFunctions
         functions={[
@@ -52,6 +55,7 @@ const mainFunctions =(
 export const Main = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [naming, setNaming] = useState("");
 
     const signOut = () => {
         window.sessionStorage.removeItem("user");
@@ -59,7 +63,26 @@ export const Main = () => {
         navigate("/");
     }
 
-    var user = JSON.parse(window.sessionStorage.getItem("user"));
+    const backToLogIn = () => {
+         let flag = VerifyLogIn();
+        console.log("flag", flag);
+        if(flag===null){
+        navigate("/");
+        }
+        else{
+            setNaming(flag.name);
+        }
+    }
+
+    useEffect(() => {
+            backToLogIn();
+    }, [backToLogIn]);
+        
+    // var name = ""
+    // var user = JSON.parse(window.sessionStorage.getItem("user"));
+    // if(user!==null){
+    //     name = user.name;
+    // }
 
     return(
         <div className="mainPage d-flex flex-column">
@@ -71,7 +94,7 @@ export const Main = () => {
                     height: "60%",
                 }}
             />
-            <h1 className="welcomeText">Bienvenida de nuevo {user.name}</h1>
+            <h1 className="welcomeText">Bienvenida de nuevo {naming}</h1>
             <Container className="centrado">
                 {mainFunctions}
             </Container>

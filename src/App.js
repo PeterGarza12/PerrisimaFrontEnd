@@ -14,22 +14,22 @@ import { CreateEmployee } from './Pages/CreateEmployee/CreateEmployee';
 import Error404           from './Pages/Error/Error404';
 
 function App() {
-  const user = JSON.parse(window.sessionStorage.getItem("user"));
+  // const user = JSON.parse(window.sessionStorage.getItem("user"));
 
-  const [isLoggedIn, setIsLoggedIn] = useState(!!user);
+  // const [isLoggedIn, setIsLoggedIn] = useState(!!user);
+  // console.log("user?", user);
+  // const requireAuth = (element) => {
+  //   console.log("ta logeado? " + isLoggedIn);
+  //   if (isLoggedIn) {
+  //     return element;
+  //   } else {
+  //     return <Navigate to="/" replace />;
+  //   }
+  // };
 
-  const requireAuth = (element) => {
-    console.log("ta logeado? " + isLoggedIn);
-    if (isLoggedIn) {
-      return element;
-    } else {
-      return <Navigate to="/" replace />;
-    }
-  };
-
-  useEffect(() => {
-    setIsLoggedIn(!!user);
-  }, [requireAuth]);
+  // useEffect(() => {
+  //   setIsLoggedIn(!!user);
+  // }, [requireAuth]);
 
   return (
     <div className="App d-flex flex-column">
@@ -37,13 +37,13 @@ function App() {
         <Header/>
         <Routes>
           <Route exact path='/' element={<Login/>}/>
-          <Route exact path="/main" element={requireAuth(<Main/>)} />
-          <Route exact path='/income' element={requireAuth(<Income/>)}/>
-          <Route exact path='/outcome' element={requireAuth(<Outcome/>)}/>       
-          <Route exact path='/client' element={requireAuth(<Client/>)}/>
-          <Route exact path='/profile' element={requireAuth(<ProfileUser/>)}/>
-          <Route exact path='/profits'element={requireAuth(<Profits/>)}/>       
-          <Route exact path='/employee' element={requireAuth(<CreateEmployee/>)}/>
+          <Route exact path="/main" element={<Main/>}/>
+          <Route exact path='/income' element={<Income/>}/>
+          <Route exact path='/outcome' element={<Outcome/>}/>       
+          <Route exact path='/client' element={<Client/>}/>
+          <Route exact path='/profile' element={<ProfileUser/>}/>
+          <Route exact path='/profits'element={<Profits/>}/>       
+          <Route exact path='/employee' element={<CreateEmployee/>}/>
           <Route path='*' element={<Error404/>}/>
         </Routes>
       </Router>

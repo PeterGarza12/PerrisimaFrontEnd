@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './../Client/Client.css'
 import CreateClient from "../../Components/ClientForms/CreateClient";
 import ModifyClient from "../../Components/ClientForms/ModifyClient";
@@ -7,10 +7,22 @@ import { ClientCreate, ClientModify, ClientDelete} from "../../services/clientsS
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
+import VerifyLogIn from "../../verifyLogin";
 
 export const Client = () => {
     const [option, setOption] = useState(1);
     const navigate = useNavigate();
+
+    const backToLogIn = () => {
+        let flag = VerifyLogIn();
+       if(flag===null){
+       navigate("/");
+       }
+   }
+
+   useEffect(() => {
+           backToLogIn();
+   }, [backToLogIn]);
 
     return(
         <div className="clientPage">
