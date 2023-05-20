@@ -12,6 +12,11 @@ export const Login = () => {
 
     const navigate = useNavigate();
 
+    const toTheMain =() => {
+        navigate("/main");
+    };
+
+
     return(
         <div className="Login-page">
             <CardImg
@@ -29,7 +34,9 @@ export const Login = () => {
                 if (response.status === 200)
                 {
                     window.sessionStorage.setItem("user", JSON.stringify(response.data));
-                    navigate("/main");
+                    console.log("al main alv");
+                    //navigate("/main");
+                   
                 }
                 else if (response.status === 401)
                 {
@@ -39,6 +46,7 @@ export const Login = () => {
                 {
                     tryLater();
                 }
+                toTheMain();
             }}/>
         </div>
     );

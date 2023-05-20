@@ -1,13 +1,25 @@
-import React from "react";
+import React, {useEffect}from "react";
 import IncomeForm from "../../Components/Income/IncomeForm";
 import { createIncome } from "../../services/incomeService";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
+import VerifyLogIn from "../../verifyLogin";
 
 export const Income = () => {
 
     const navigate = useNavigate();
+    
+    const backToLogIn = () => {
+        let flag = VerifyLogIn();
+       if(flag===null){
+       navigate("/");
+       }
+   }
+
+   useEffect(() => {
+           backToLogIn()
+        }, [backToLogIn]);
 
     return(
         <div>

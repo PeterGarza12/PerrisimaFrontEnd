@@ -1,14 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import EmployeeForm from "../../Components/EmployeeForm/EmployeeForm";
 import './CreateEmployee.css'
 import { postCreateEmployee } from "../../services/usersService";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
+import VerifyLogIn from "../../verifyLogin";
 
 export const CreateEmployee = () => {
 
     const navigate = useNavigate();
+
+    const backToLogIn = () => {
+        let flag = VerifyLogIn();
+       if(flag===null){
+       navigate("/");
+       }
+   }
+
+   useEffect(() => {
+           backToLogIn();
+   }, [backToLogIn]);
 
     return(
         <div className="createEmployeePage">

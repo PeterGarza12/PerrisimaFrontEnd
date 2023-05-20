@@ -1,8 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ProfileForm from "../../Components/ProfileForm/ProfileForm";
+import VerifyLogIn from "../../verifyLogin";
+import { useNavigate } from "react-router-dom";
 
 
 export const ProfileUser = () => {
+
+    const navigate = useNavigate();
+    
+    const backToLogIn = () => {
+        let flag = VerifyLogIn();
+       if(flag===null){
+       navigate("/");
+       }
+   }
+
+   useEffect(() => {
+           backToLogIn();
+   }, [backToLogIn]);
     
     return(
         <div className="createEmployeePage">

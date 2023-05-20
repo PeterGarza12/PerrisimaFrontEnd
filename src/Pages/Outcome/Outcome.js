@@ -1,12 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import OutcomeForm from "../../Components/OutcomeForm/OutcomeForm";
 import { useNavigate } from "react-router-dom";
 import { OutcomeCreate } from "../../services/outcomeService";
 import { mistakeMessage, tryLater } from "../../Components/Alerts/Alerts";
+import VerifyLogIn from "../../verifyLogin";
 
 export const Outcome = () => {
 
     let navigate = useNavigate();
+    
+    const backToLogIn = () => {
+        let flag = VerifyLogIn();
+       if(flag===null){
+       navigate("/");
+       }
+   }
+
+   useEffect(() => {
+           backToLogIn();
+   }, [backToLogIn]);
+
     return(
         <div>
             <h1 className="titlePage">
