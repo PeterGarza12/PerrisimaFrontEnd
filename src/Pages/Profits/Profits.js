@@ -4,6 +4,8 @@ import './Profits.css';
 import { useEffect, useState } from "react";
 import { getAll, getDataByFilters } from "../../services/profitService";
 import $ from "jquery";
+import { dataNotFound } from "../../Components/Alerts/Alerts";
+
 
 const Headers = (
   [
@@ -26,8 +28,11 @@ function Profits() {
       useEffect(() => {
         const getAllData = async () => {
           const data = await getAll();
+
+          if(data != null){
           data.forEach(getTotal);
           setDataTable(data);
+          }
        }
      
        getAllData();
@@ -74,9 +79,16 @@ function Profits() {
 
         var response = await getDataByFilters(phone, month, year);
         var data = response.data;
-        data.forEach(getTotal);
-        
-        setDataTable(response.data)
+        if(response.status === 404){
+          dataNotFound();
+          setDataTable([]);
+          setTotal(0);
+        }
+        else if (response.data != null){
+          data.forEach(getTotal);
+          setDataTable(response.data)
+        }
+
 
       }
 

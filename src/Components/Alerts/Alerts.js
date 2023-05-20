@@ -24,6 +24,14 @@ export const mistakeMessage = () => {
   });
 };
 
+export const dataNotFound = () => {
+  Swal.fire({
+    title: 'No se encontró ningún registro',
+    icon: 'error',
+    confirmButtonText: 'Ok'
+  });
+};
+
 export const tryLater = () => {
   Swal.fire({
     title: 'Algo salió mal, vuelva a intentarlo más tarde',

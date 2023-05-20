@@ -20,8 +20,6 @@ const TableHeadItem = ({ item }) => <th>{item.heading}</th>
 const TableRow = ({ item, column }) => (
   <tr>
     {column.map((columnItem, index) => {
-
-      console.log(index);
       return <td>{item[`${columnItem.value}`]}</td>
     })}
   </tr>
