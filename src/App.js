@@ -14,11 +14,12 @@ import { CreateEmployee } from './Pages/CreateEmployee/CreateEmployee';
 import Error404           from './Pages/Error/Error404';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   const user = JSON.parse(window.sessionStorage.getItem("user"));
-  
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!user);
+
   const requireAuth = (element) => {
+    console.log("ta logeado? " + isLoggedIn);
     if (isLoggedIn) {
       return element;
     } else {
