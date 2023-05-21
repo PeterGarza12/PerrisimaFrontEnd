@@ -40,7 +40,11 @@ export const Login = () => {
                 }
                 else if (response.status === 401)
                 {
-                    mistakeMessage();
+                    mistakeMessage("Credenciales incorrectas");
+                }
+                else if (response.status === 404)
+                {
+                    mistakeMessage("El usuario no existe");
                 }
                 else
                 {
