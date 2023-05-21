@@ -75,6 +75,12 @@ function Profits() {
     function getTotal(item){
       totalsum += item.amount;
       setTotal(totalsum);
+      const date = new Date(item.created_at);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+      const day = date.getDate();
+      const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      item.created_at = formattedDate;
       if(item.client_id != null){
         Object.defineProperty(item, "amounti",
           Object.getOwnPropertyDescriptor(item, "amount"));
