@@ -11,3 +11,32 @@
    background-color: #6010b0;
    color: white;
 }
+
+input{
+   border: none;
+   border-bottom: 1px solid black;
+   margin-top: 20px;
+   transition: all 200ms;
+ }
+ 
+ input:hover, input:focus{
+   outline: none;
+   border: none;
+   border-bottom: 1px solid #7413DB;
+ }
+ 
+ button {
+   border: none;
+   background: none;
+   cursor: pointer;
+   margin: 0;
+   padding: 0;
+ }
+ 
+ svg { 
+   color: #7413DB;
+ }
+ 
+ svg:hover {
+   color: blue;
+ }
